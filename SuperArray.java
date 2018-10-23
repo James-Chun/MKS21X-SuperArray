@@ -3,14 +3,14 @@ public class SuperArray{
   private int size;
 
   public SuperArray() {
-    data = 10;
+    data = new String[10];
     size = 0;
   }
 
   public void clear() {
     size = 0;
-    for (int i = 0; i < this.length; i ++){
-      this[i]=null;
+    for (int i = 0; i < 10; i ++){
+      this.data[i]=null;
     }
   }
 
@@ -19,7 +19,7 @@ public class SuperArray{
   }
 
   public boolean isEmpty() {
-    return size = 0;
+    return size == 0;
   }
 /*
   public boolean add(String) {
@@ -28,10 +28,10 @@ public class SuperArray{
 */
   public String toString() {
     String s = "[";
-    for (int i = 0; i < this.length;i++){
-      s = s + this[i];
+    for (int i = 0; i < 10;i++){
+      s = s + this.data[i];
 
-      if (i != this.length-1){
+      if (i != 9){
         s = s +", ";
       }
 
@@ -39,4 +39,28 @@ public class SuperArray{
     return s+"]";
   }
 
+  public String toStringDebug() {
+    String s = "[";
+    for (int i = 0; i < 10;i++){
+      if (this.data[i] == null) {
+        s = s + "null";
+      }
+      else {
+        s = s + this.data[i];
+      }
+
+      if (i != 9){
+        s = s +", ";
+      }
+
+    }
+    return s+"]";
+  }
+
+  public String get(int index) {
+    if (index < 0 || index > size) {
+      return null;
+    }
+    return this.data[index];
+  }
 }
