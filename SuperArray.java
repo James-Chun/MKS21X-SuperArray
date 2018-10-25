@@ -21,18 +21,26 @@ public class SuperArray{
   public boolean isEmpty() {
     return size == 0;
   }
-/*
-  public boolean add(String) {
 
+  public boolean add(String s) {
+    if (size != 10) {
+      this.data[size]=s;
+      size ++;
+    }
+    else {
+      return false;
+    }
+    return true;
   }
-*/
+
   public String toString() {
     String s = "[";
     for (int i = 0; i < 10;i++){
-      s = s + this.data[i];
-
-      if (i != 9){
-        s = s +", ";
+      if (this.data[i]!=null){
+        s = s + this.data[i];
+        if (i != size-1){
+          s = s +", ";
+        }
       }
 
     }
@@ -49,7 +57,7 @@ public class SuperArray{
         s = s + this.data[i];
       }
 
-      if (i != 9){
+      if (i != size -1){
         s = s +", ";
       }
 
@@ -63,4 +71,35 @@ public class SuperArray{
     }
     return this.data[index];
   }
+
+  public String set(int index, String element) {
+    String old = "null; error out of bounds";
+    if (index >= 0 && index <= size) {
+      old = this.data[index];
+      this.data[index] = element;
+    }
+    return old;
+  }
+
+  public boolean contains(String element) {
+    for (int i = 0; i < size; i ++) {
+      if (data[i].equals(element)) {
+        return true;
+      }
+    }
+    return false;
+  }
+
+  public void add(int index, String element) {
+    String[] new = new String[10];
+    if (size + index <= 10) {
+
+    }
+    else {
+      return "error; out of bounds";
+    }
+  }
+
+
+
 }
