@@ -92,8 +92,12 @@ public class SuperArray{
 
   public void add(int index, String element) {
     String[] new = new String[10];
-    if (size + index <= 10) {
-
+    if (size + index <= 10 && size > index) {
+      for (int i = 0; i < index; i ++) {
+        new[i]=data[i];
+      }
+      data[index]=element;
+      for (int i = index; i < size; )
     }
     else {
       return "error; out of bounds";
