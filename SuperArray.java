@@ -155,6 +155,4 @@ public class SuperArray {
     data = newArray;
     return removed;
   }
-      }
-  }
 }
