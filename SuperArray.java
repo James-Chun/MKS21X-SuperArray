@@ -138,4 +138,23 @@ public class SuperArray {
     data = newArray;
     return gone;
   }
+  
+  public boolean remove(String target){
+    boolean removed = false;
+    String[] newArray = new String[data.length];
+    for (int i = ; i < size(); i ++){
+      if (data[i].equals(target)){
+        removed = true;
+      }
+      if (removed){
+        newArray[i] = data[i+1];
+      }else{
+        newArray[i] = data[i];
+      }
+    }
+    data = newArray;
+    return removed;
+  }
+      }
+  }
 }
