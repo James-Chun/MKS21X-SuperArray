@@ -1,109 +1,141 @@
-public class SuperArray{
+public class SuperArray {
   private String[] data;
   private int size;
-
-  public SuperArray() {
+  public SuperArray(){
     data = new String[10];
     size = 0;
   }
-
-  public void clear() {
+  public void clear(){
     size = 0;
-    for (int i = 0; i < 10; i ++){
-      this.data[i]=null;
-    }
   }
-
-  public int size() {
+  public int size(){
     return size;
   }
-
-  public boolean isEmpty() {
-    return size == 0;
+  public boolean isEmpty(){
+    return size() == 0;
   }
-
-  public boolean add(String s) {
-    if (size != 10) {
-      this.data[size]=s;
-      size ++;
+  public boolean add(String value){
+    if (size() == data.length){
+      resize();
     }
-    else {
-      return false;
-    }
+    data[size()] = value;
+    size ++;
     return true;
   }
-
-  public String toString() {
-    String s = "[";
-    for (int i = 0; i < 10;i++){
-      if (this.data[i]!=null){
-        s = s + this.data[i];
-        if (i != size-1){
-          s = s +", ";
-        }
+  public String toString(){
+    String ans = "[";
+    for (int i = 0; i < size()+1; i++){
+      ans += get(i);
+      if (i + 1 != size()+1){
+        ans += ",";
       }
-
     }
-    return s+"]";
+    ans += "]";
+    return ans;
   }
-
-  public String toStringDebug() {
-    String s = "[";
-    for (int i = 0; i < 10;i++){
-      if (this.data[i] == null) {
-        s = s + "null";
+  public String toStringDebug(){
+    String ans = "[";
+    for (int i = 0; i < data.length; i++){
+      ans += get(i);
+      if (i + 1 != data.length){
+        ans += ",";
       }
-      else {
-        s = s + this.data[i];
-      }
-
-      if (i != size -1){
-        s = s +", ";
-      }
-
     }
-    return s+"]";
+    ans += "]";
+    return ans;
   }
-
-  public String get(int index) {
-    if (index < 0 || index > size) {
+  public String get(int index){
+    if (index < 0 || index >= data.length){
+      System.out.println("Error: index out of range");
       return null;
+    }else{
+      return data[index];
     }
-    return this.data[index];
   }
-
-  public String set(int index, String element) {
-    String old = "null; error out of bounds";
-    if (index >= 0 && index <= size) {
-      old = this.data[index];
-      this.data[index] = element;
+  public String set(int index, String value){
+    String old = data[index];
+    if (index < 0 || index >= size()){
+      System.out.println("Error: index out of range");
+      return null;
+    }else{
+      data[index] = value;
     }
     return old;
   }
-
-  public boolean contains(String element) {
-    for (int i = 0; i < size; i ++) {
-      if (data[i].equals(element)) {
+  private void resize(){
+    String[] newArray = new String[data.length * 2];
+    for (int i = 0; i < size(); i++){
+      newArray[i] = data[i];
+    }
+    data = newArray;
+  }
+  public boolean contains(String target){
+    for (int i = 0; i < size(); i++){
+      if (data[i].equals(target)){
         return true;
       }
     }
     return false;
   }
-
-  public void add(int index, String element) {
-    String[] new = new String[10];
-    if (size + index <= 10 && size > index) {
-      for (int i = 0; i < index; i ++) {
-        new[i]=data[i];
+  public int indexOf(String target){
+    for (int i = 0; i < size(); i++){
+      if (data[i].equals(target)){
+        return i;
       }
-      data[index]=element;
-      for (int i = index; i < size; )
     }
-    else {
-      return "error; out of bounds";
-    }
+    return -1;
   }
+  public int lastIndexOf(String target){
+    for (int i = size()-1; i > 0; i--){
+      if (data[i].equals(target)){
+        return i;
+      }
+    }
+    return -1;
+  }
+  public void add(int index, String value){
+    boolean inserted = false;
+    if (index < 0 || index > size()){
+      System.out.println("Error: index out of range");
 
-
-
+    }
+    if (size() == data.length){
+      resize();
+    }
+    String[] newArray = new String[data.length];
+    for (int i = 0; i < size()+1; i++){
+      if (i == index){
+        newArray[i] = value;
+        inserted = true;
+      }
+      if (inserted){
+        newArray[i+1] = data[i];
+      }else{
+        newArray[i] = data[i];
+      }
+    }
+    data = newArray;
+  }
+  public String remove(int target){
+    boolean removed = false;
+    String gone = "";
+    String[] newArray = new String[data.length];
+    if (target < 0 || target >= size()){
+      System.out.println("Error: index out of range");
+      return null;
+    }
+    for (int i = 0; i < size(); i++){
+      if (i == target){
+        removed = true;
+        gone = data[i];
+      }
+      if (removed){
+        newArray[i] = data[i+1];
+      }else{
+        newArray[i] = data[i];
+      }
+    }
+    data = newArray;
+    return gone;
+  }
 }
