@@ -70,7 +70,7 @@ public class SuperArray {
     data = newArray;
   }
   public boolean contains(String target){
-    for (int i = 0; i < size(); i++){
+    for (int i = 0; i < size()-1; i++){
       if (data[i].equals(target)){
         return true;
       }
@@ -142,7 +142,7 @@ public class SuperArray {
   public boolean remove(String target){
     boolean removed = false;
     String[] newArray = new String[data.length];
-    for (int i = ; i < size(); i ++){
+    for (int i = 0; i < size(); i ++){
       if (data[i].equals(target)){
         removed = true;
       }
