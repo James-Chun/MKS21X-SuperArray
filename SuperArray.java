@@ -144,7 +144,7 @@ public class SuperArray {
     data = newArray;
     return gone;
   }
-  
+
   public boolean remove(String target){
     boolean removed = false;
     String[] newArray = new String[data.length];
