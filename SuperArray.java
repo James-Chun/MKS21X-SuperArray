@@ -1,9 +1,13 @@
 public class SuperArray {
   private String[] data;
   private int size;
+  public SuperArray(){
+    data = new String[10];
+    size = 0;
+  }
   public SuperArray(int capacity){
     if (capacity < 0){
-      throw new IndexOutOfBoundsException("Index Out of Bounds");
+      throw new IllegalArgumentException();
     }
     else {
       data = new String[capacity];
