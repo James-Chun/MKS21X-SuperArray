@@ -7,7 +7,7 @@ public class SuperArray {
   }
   public SuperArray(int capacity){
     if (capacity < 0){
-      throw new IllegalArgumentException();
+      throw new IllegalArgumentException("Parameter Out of Bounds");
     }
     else {
       data = new String[capacity];
