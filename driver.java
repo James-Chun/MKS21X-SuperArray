@@ -1,164 +1,94 @@
 public class Driver {
-
   public static void main(String[] args) {
 
+    try {
+    System.out.print("\n\n\n\n");
 
-    System.out.println("TESTING PHASE 1 and 2... except clear() which will be at the end");
+    /**************************************************************************/
 
-    System.out.println();
-    System.out.println();
-    System.out.println("Testing SuperArray(int) ... SA should be [] even when debugged");
-    SuperArray SA = new SuperArray(0);
+    SuperArray SA = new SuperArray(15);
+    System.out.println("Created an empty SuperArray \"SA\" with capacity 15\n\n");
 
-    System.out.println("Testing toString() and toStringDebug ... Expected: []");
-    System.out.println("Current Status of SA: " + SA.toStringDebug());
+    /**************************************************************************/
 
-    System.out.println();
+    System.out.println("SA's status:                       " + SA.toStringDebug());
+    System.out.println("SA is empty (should return true):  " + SA.isEmpty());
+    System.out.println("SA's size:                         " + SA.size());
 
-    System.out.println("Testing isEmpty() ... Expected : true");
-    System.out.println("isEmpty?: " + SA.isEmpty());
+    /**************************************************************************/
 
-    System.out.println();
+    SA.add(0,"Muse");
+    SA.add(1,"505");
+    SA.add(2,"Radiohead");
+    SA.add(3,"Haken");
+    //SA.add(5, "Genesis");     //Comment in this line to check to see if it throws an error
+    System.out.println("\nAdded \"Muse\", \"505\", \"Radiohead\", \"Haken\" to SA");
+    System.out.println("SA's current value':               " + SA.toString());
+    System.out.println("Value with nulls:                  " + SA.toStringDebug() + "\n\n");
+    System.out.println("SA is empty (should return false): " + SA.isEmpty());
 
-    System.out.println("Testing add(String) ... Expected : true");
-    System.out.println(SA.add("A"));
-    System.out.println("Expected : [A]");
-    System.out.println("Testing toString() ... Current Status of SA : " + SA);
-    System.out.println("Testing isEmpty() ... Expected : false");
-    System.out.println("isEmpty?: " + SA.isEmpty());
-    System.out.println("Testing size() ... Expected : 1");
-    System.out.println("Size: " + SA.size());
+    /**************************************************************************/
 
-    System.out.println();
+    SA.set(1, "42");
+    System.out.println("Setting SA[1] to \"42\"...");
+    System.out.println("\n");
+    System.out.println("Checking set value:                " + SA.get(1) + "\n\n");
 
-    System.out.println("Adding \"B\" to SA?: " + SA.add("B"));
-    System.out.println("Testing resize() and toStringDebug ... Expected [A, B, null]");
-    System.out.println("Current Status of SA: " + SA.toStringDebug());
-    System.out.println("Testing get(int) ... Expected : B");
-    System.out.println("SA[1] == " + SA.get(1));
-    System.out.println("Testing get(int)\'s throw ... Expected : 2 error messages");
-    try{
-      SA.get(2);
-    } catch(IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in get()");
+    System.out.println("Trying to set a value an index that is out of bounds");
+    //SA.set(4,"Celestial Elixir is the best song"); //Comment in this line to check to see if it throws an error
+
+    /**************************************************************************/
+
+    for (int i = SA.size(); i < 15; i++) {
+      SA.add("" + i);
     }
-    try{
-      SA.get(-2);
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in get()");
-    }
+    System.out.println("Filling empty slots of SA with integers...");
+    System.out.println("Full status of SA:                 " + SA.toStringDebug() + "\n");
+    System.out.println("Adding \"Dream Theater\" to SA to test resize...");
+    SA.add("Dream Theater");
+    System.out.println("SA (capacity should have doubled + 1): " + SA.toStringDebug() + "\n\n");
 
-    System.out.println();
-/*
-    System.out.println("Testing set(int,String) ...  Expected : A");
-    System.out.println("\"C\" will replace : " + SA.set(0,"C"));
-    System.out.println("Expected : [C, B]");
-    System.out.println("SA\'s Current Status: " + SA);
-    System.out.println("Testing set(int,String)\'s throw ... Expected : 2 error messages");
-    try{
-      SA.set(2,"C");
-    } catch(IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in set(int,String)");
-    }
-    try{
-      SA.set(-2,"xd");
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in set(int,String)");
-    }
+    /**************************************************************************/
 
-    System.out.println();
-    System.out.println("Expected : [C, B]");
-    System.out.println("SA\'s Current Status after Testing Phase 1: " + SA);
-    System.out.println("Expected : [C, B, null]");
-    System.out.println("SA\'s Current debugged Status after Testing Phase 1: " + SA.toStringDebug());
-    System.out.println();
-    System.out.println("******************************************************");
-    System.out.println();
-    System.out.println("TESTING PHASE 2 and 3 ...");
+    System.out.println("Checking SA for \"Muse\":      " + SA.contains("Muse"));
+    System.out.println("This should return true!");
+    System.out.println("Checking SA for \"Kendrick Lamar\"    " + SA.contains("Kendrick Lamar"));
+    System.out.println("This should return false!\n\n");
+    System.out.println("Trying to get a value at an index that is out of bounds");
+    //SA.get(35);                       //Comment in this line to check to see if it throws an error
 
-    System.out.println();
+    /**************************************************************************/
 
-    System.out.println("Testing add(int.String) ... Expected : SA should be [C, D, B, E]");
-    SA.add(1,"D");
-    SA.add(3, "E");
-    System.out.println("SA\'s Current Status: " + SA);
-    System.out.println("Testing add(int,String)\'s throw ... Expected : 2 error messages");
-    try{
-      SA.add(5,"xd");
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in add(int,String)");
-    }
-    try{
-      SA.add(-2,"xd");
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in add(int,String)");
-    }
+    SA.add(5, "Thank You Scientist");
+    System.out.println("Adding \"Thank You Scientist\" to index 5...");
+    System.out.println("SA status:                         " + SA.toString());
+    SA.remove(6);
+    System.out.println("\nRemoving the number \"5\" from index 6...");
+    System.out.println("SA status:                         " + SA.toString());
+    SA.remove("42");
+    System.out.println("\nRemoving the number \"42\" from SA...");
+    System.out.println("SA status:                         " + SA.toString() + "\n\n");
 
-    System.out.println();
+    System.out.println("\nTrying to remove an index that is out of bounds");
+    //SA.remove(35);  //Comment in this line to check to see if it throws an error
 
-    System.out.println("Testing resize() ... Expected: SA when debugged should be [C, D, B, E, null, null, null]");
-    System.out.println(SA.toStringDebug());
+    SA.set(5,"MGMT");
+    System.out.println("Setting \"MGMT\" to index 5...");
+    System.out.println("SA status:                         " + SA.toString());
+    SA.set(10,"MGMT");
+    System.out.println("Setting \"MGMT\" to index 10...");
+    System.out.println("SA status:                         " + SA.toString());
+    System.out.println("Checking SA for first index of \"MGMT\":                       " + SA.indexOf("MGMT"));
+    System.out.println("Checking SA for last index of \"MGMT\":                       " + SA.lastIndexOf("MGMT"));
 
-    System.out.println();
-
-    System.out.println("Testing contains(String) ... Expected : true");
-    System.out.println("Does SA contain \"C\" ?: " + SA.contains("C"));
-    System.out.println("Expected : false");
-    System.out.println("Does SA contain \"C\" ?: " + SA.contains("F"));
-
-    System.out.println("Testing indexOf(String) ... Expected : 3");
-    System.out.println("Where is \"E\" in SA? :" + SA.indexOf("E"));
-    System.out.println("Expected : -1");
-    System.out.println("Where is \"E\" in SA? :" + SA.indexOf("Z"));
-
-    System.out.println();
-
-    SA.add("C");
-    System.out.println("Added \"C\" to the end of the list using add(String)");
-    System.out.println("Status of SA is: " + SA);
-
-    System.out.println();
-
-    System.out.println("Testing lastIndexOf(String) ... Expected : 4");
-    System.out.println("Where is \"C\" in SA? :" + SA.lastIndexOf("C"));
-    System.out.println("Expected : -1");
-    System.out.println("Where is \"Z\" in SA? :" + SA.lastIndexOf("Z"));
-
-    System.out.println();
-
-    System.out.println("Testing remove(int) ...  Expected : Removed element is D");
-    System.out.println("The element that is removed is : " + SA.remove(1));
-    System.out.println("Expected: SA is [C, B, E, C]");
-    System.out.println("Current Status of SA: " + SA);
-    System.out.println("Testing remove(int)\'s throw ... Expected : 2 error messages");
-    try{
-      SA.remove(7);
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in remove(int)");
-    }
-    try{
-      SA.remove(-2);
-    } catch (IndexOutOfBoundsException e){
-      System.out.println("Caught an Exception in remove(int)");
-    }
-
-    System.out.println();
-
-    System.out.println("Testing remove(String) ...  Expected : true");
-    System.out.println("The first element, \"C\" is removed ? : " + SA.remove("C"));
-    System.out.println("Expected: SA is [B, E, C]");
-    System.out.println("Current Status of SA: " + SA);
-    System.out.println("Expected: false");
-    System.out.println(SA.remove("ASD"));
-
-    System.out.println();
-
-    System.out.println("Testing clear() ... Expected : SA should be []");
+    System.out.println("Clearing SA");
     SA.clear();
-    System.out.println(SA);
+    System.out.println(SA.toString());
 
-    System.out.println();
+  }
+  catch(IndexOutOfBoundsException e) {
+    System.out.println("Caught a problem in the main");
 
-    System.out.println("END OF TESTING");
-  */}
+  }
+  }
 }
