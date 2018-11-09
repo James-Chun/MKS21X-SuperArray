@@ -1,195 +1,168 @@
-public class SuperArray{
+public class SuperArray {
   private String[] data;
   private int size;
-
-  //Default Constructor
   public SuperArray(){
     data = new String[10];
     size = 0;
   }
-  //Constructor w/ capacity
   public SuperArray(int capacity){
     if (capacity < 0){
       throw new IllegalArgumentException("Parameter Out of Bounds");
     }
-    if (capacity == 0){
-      data = new String[1];
-    }else {
+    else {
       data = new String[capacity];
+      size = 0;
     }
+  }
+  public void clear(){
+    // This resets the size to zero
     size = 0;
   }
-
-  //toString (regular)
-  public String toString(){
-    String s = "[";
-    for (int i = 0;i<size();i++){
-      if (get(i)!= null){
-        s += get(i);
-        if (i + 1 != size()){
-          s += ",";
-        }
-      }
-    }
-    s += "]";
-    return s;
-  }
-
-  //toString (Debug)
-  public String toStringDebug(){
-    String s = "[";
-    for (int i = 0;i<data.length;i++){
-      s += data[i];
-      if (i + 1 != data.length){
-        s += ",";
-      }
-    }
-    s += "]";
-    return s;
-  }
-
-  //Clear method
-  public void clear() {
-    size = 0;
-  }
-
-  //Size method
   public int size(){
+    // This is the accessor method for size
     return size;
   }
-
-  //isEmpty method
   public boolean isEmpty(){
-    return size() == 0;
+    // Checks if the array is empty
+    return size == 0;
   }
-
-  //add method
   public boolean add(String value){
-    if (size()==data.length){
+    // This appends the parameter value to the end of the array
+    // If the array needs to be expanded, the length of the array is doubled
+    if (size == data.length){
       resize();
     }
-    data[size()] = value;
+    data[size] = value;
     size ++;
     return true;
   }
+  public String get(int index){
+    // Returns the value at the specified index
+    if (index < 0 || index >= size()){
+      throw new IndexOutOfBoundsException("Index Out of Bounds");
+    }
+    return data[index];
+  }
+  public String toString(){
+    // Prints out the filled values of the array
+    String ans = "[";
+    for (int i = 0; i < size; i++){
+      ans += get(i);
+      if (i + 1 != size){
+        ans += ",";
+      }
+    }
+    ans += "]";
+    return ans;
+  }
+  public String toStringDebug(){
+    // pritns out all the values of array including the null values.
+    String ans = "[";
+    if (data.length == 0){
+      return null;
+    }
+    for(int c = 0; c != data.length - 1; c++){
+      ans = ans + data[c] + ",";
+    }
+    ans = ans + data[data.length -1];
+    ans = ans + "]";
+    return ans;
 
-  //second add method
-  public void add(int index, String value){
-    boolean inserted = false;
-    if (index < 0 || index > size()+1){
-      throw new IndexOutOfBoundsException("Index Out of Bound");
-
+  }
+  public String set(int index, String value){
+    // Changes the value at the specified index to the new value given in paremeter
+    // Returns the old value
+    String old = data[index];
+    if (index < 0 || index >= size()){
+      throw new IndexOutOfBoundsException("Index Out of Bounds");
     }
-    if (size() == data.length){
-      resize();
-    }
-    String[] newArray = new String[data.length];
-    for (int i = 0; i <index;i++){
-      newArray[i]=data[i];
-    }
-    newArray[index]=value;
-    size ++;
-    for (int i = index+1; i < size();i++){
-      newArray[i+1]=data[i];
+    data[index] = value;
+    return old;
+  }
+  private void resize(){
+    // Doubles the size of the array
+    String[] newArray = new String[(data.length * 2)+1];
+    for (int i = 0; i < size; i++){
+      newArray[i] = data[i];
     }
     data = newArray;
   }
-
-
-
-
-  //get method
-  public String get(int index){
-    if ( (index < 0 || index > size())){
-      throw new IndexOutOfBoundsException("Index Out of Bounds");
-    }else{
-      return data[index];
+  public boolean contains(String target){
+    for (int i = 0; i < size; i++){
+      if (data[i].equals(target)){
+        return true;
+      }
     }
+    return false;
   }
-
-  //resize
-  public void resize(){
-    String[] newArray = new String[data.length * 2];
-      for (int i = 0; i < size(); i++){
+  public int indexOf(String target){
+    for (int i = 0; i < size; i++){
+      if (data[i].equals(target)){
+        return i;
+      }
+    }
+    return -1;
+  }
+  public int lastIndexOf(String target){
+    for (int i = size()-1; i > 0; i--){
+      if (data[i].equals(target)){
+        return i;
+      }
+    }
+    return -1;
+  }
+  public void add(int index, String value){
+    // makes a new array and inserts value at index and shifting everything else to the right down by one.
+    boolean inserted = false;
+    String[] newArray = new String[data.length + 1];
+    if (index < 0 || index > size()){
+      throw new IndexOutOfBoundsException("Index Out of Bound");
+    }
+    for (int i = 0; i < size; i++){
+      if (i == index){
+        newArray[i] = value;
+        inserted = true;
+      }
+      if (inserted){
+        newArray[i+1] = data[i];
+      }
+      if (inserted == false){
         newArray[i] = data[i];
       }
+    }
     data = newArray;
+    size ++;
   }
-
-//set method
-public String set (int index, String value){
-  if (index < 0 || index >= data.length){
-    throw new IndexOutOfBoundsException("Index Out of Bounds");
-  }
-  String old = data[index];
-  data[index]=value;
-  return old;
-}
-
-//contains method
-public boolean contains(String target){
-  for (int i = 0;i<size();i++){
-    if (data[i].equals(target)){
-      return true;
+  public String remove(int target){
+    // removes the value at target index and returns it. Prints error if index out of range.
+    boolean removed = false;
+    String gone = "";
+    String[] newArray = new String[data.length - 1];
+    if (target < 0 || target >= size()){
+      throw new IndexOutOfBoundsException("Index Out of Bounds");
     }
-  }
-  return false;
-}
-
-public String remove(int target){
-  boolean removed = false;
-  String gone = "";
-  String[] newArray = new String[data.length];
-  if (target < 0 || target >= size()){
-    throw new IndexOutOfBoundsException("Index Out of Bounds");
-  }
-  for (int i = 0; i < size(); i++){
-    if (i == target){
-      removed = true;
-      gone = data[i];
+    for (int i = 0; i < size; i++){
+      if (i == target){
+        removed = true;
+        gone = data[i];
+      }
+      if (removed){
+        newArray[i] = data[i+1];
+      }else{
+        newArray[i] = data[i];
+      }
     }
-    if (removed){
-      newArray[i] = data[i+1];
-    }else{
-      newArray[i] = data[i];
-    }
+    data = newArray;
+    size --;
+    return gone;
   }
-  data = newArray;
-  size--;
-  return gone;
-}
-
-public boolean remove(String target){
-  boolean removed = false;
-  String[] newArray = new String[data.length];
-  for (int i = 0; i < size(); i ++){
-    if (data[i]!=null&&data[i].equals(target)){
-      removed = true;
+  public boolean remove(String target){
+    // uses previous remove method to remove target string.
+    if (indexOf(target) == -1){
+      return false;
     }
-    if (removed){
-      newArray[i] = data[i+1];
-    }else{
-      newArray[i] = data[i];
-    }
+    int index = indexOf(target);
+    remove(index);
+    return true;
   }
-  data = newArray;
-  size --;
-  return removed;
-}
-public int indexOf(String target){
-  for (int i = 0; i < size(); i++){
-    if (data[i].equals(target)){
-      return i;
-    }
-  }
-  return -1;
-}
-public int lastIndexOf(String target){
-  for (int i = size()-1; i > 0; i--){
-    if (data[i].equals(target)){
-      return i;
-    }
-  }
-  return -1;
-}
 }
